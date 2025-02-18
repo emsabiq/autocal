@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar Event</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
+</head>
+<body><div class="header">
+    <div class="header-content">
+        <h1>Calendar Event - BSI RO 2 Medan</h1>
+        <img src="logo.png" alt="BSI Logo" class="logo">
+    </div>
+</div>
+
+    <div class="container">
+        <!-- Kalender di sebelah kiri -->
+        <div class="calendar-container">
+            <div id="calendar"></div>
+        </div>
+        
+        <!-- Sidebar kanan -->
+        <div class="sidebar">
+            <div class="event-box" id="current-events">
+                <h2>Current Events <span id="blinking-text" class="blinking-text" style="display: none;">(Sedang Berlangsung)</span></h2>
+                <ul id="current-event-list"></ul>
+            </div>
+            
+            <div class="event-box" id="upcoming-events">
+                <h2>Upcoming Events</h2>
+                <ul id="upcoming-event-list"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

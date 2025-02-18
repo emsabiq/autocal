@@ -1,0 +1,259 @@
+/* --- Header Styling (Dengan Container) --- */
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #007b5e;
+    padding: 15px;
+    color: white;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    text-align: center;
+}
+
+/* Container untuk judul dan logo */
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.logo {
+    height: 40px;
+    object-fit: contain;
+}
+
+.header h1 {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 0;
+}
+
+
+/* --- Global Styles --- */
+body {
+    font-family: 'Lato', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: fixed;
+    height: 100vh;
+    background-color: #121212;
+    color: #ffffff;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+}
+
+/* --- Kalender Container (Lebih Besar & Lebih Proporsional) --- */
+.calendar-container {
+    flex: 3; /* Perbesar area kalender agar lebih dominan */
+    padding: 30px; /* Tambahkan padding untuk memberi ruang lebih */
+    background: #1e1e1e;
+    color: #cfcfcf;
+    border-radius: 10px;
+    overflow: hidden;
+    min-height: 400px; /* Pastikan kalender memiliki tinggi minimal */
+}
+
+/* --- Pastikan Kalender Lebih Luas di Layar Lebar --- */
+@media (min-width: 1200px) {
+    .calendar-container {
+        flex: 1.5; /* Lebih besar di layar lebar */
+        min-height: 700px; /* Lebih tinggi untuk tampilan desktop */
+    }
+}
+
+/* --- Sesuaikan untuk Mobile agar Tetap Nyaman --- */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Ubah ke tata letak vertikal di layar kecil */
+    }
+
+    .calendar-container {
+        flex: 1;
+        width: 100%;
+        padding: 20px;
+    }
+}
+
+/* --- Toolbar FullCalendar --- */
+.fc-toolbar {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+/* --- Kalender Grid (Menghapus Garis Tabel) --- */
+.fc-daygrid {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: none !important;
+}
+
+/* --- Efek Hover pada Kotak Kalender --- */
+.fc-daygrid-day:hover {
+    background: #f5f5f5 !important; /* Warna lebih terang saat hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(1.02);
+}
+
+/* --- Warna Spesial untuk Hari Ini --- */
+.fc-daygrid-day.fc-day-today {
+    background: #ff7043 !important; /* Warna oranye lembut untuk hari ini */
+    color: #ffffff !important;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+}
+
+/* --- Event Container (Bisa Menampung 4 Event) --- */
+.fc-daygrid-day-events {
+    overflow: hidden;
+    max-height: 80px; /* Menampung hingga 4 event */
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* --- Style untuk Event di dalam Kotak Kalender --- */
+.fc-daygrid-day-events .fc-event {
+    font-size: 11px;
+    font-weight: bold;
+    color: #ffffff;
+    padding: 2px;
+    flex-shrink: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    width: 100%;
+    background-color: #00796b; /* Warna event hijau tua */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Teks Event Berjalan (Marquee) untuk Menampilkan Teks Lengkap --- */
+.fc-event-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.fc-event-content span {
+    display: inline-block;
+    white-space: nowrap;
+    animation: marqueeEvent 5s linear infinite;
+    min-width: 100%;
+}
+
+/* --- Animasi untuk Teks Event Berjalan --- */
+@keyframes marqueeEvent {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+/* --- Tampilan Default Event --- */
+.fc-event {
+    background-color: #004d40; /* Warna event hijau gelap */
+    color: #ffffff;
+    border-radius: 4px;
+    padding: 6px;
+    font-family: 'Open Sans', sans-serif;
+    border: none;
+}
+
+/* --- Sidebar Styling --- */
+.sidebar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background: #1e1e1e;
+    color: #cfcfcf;
+    border-radius: 10px;
+}
+
+/* --- Box untuk Event di Sidebar --- */
+.event-box {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #333;
+    background: #2e2e2e;
+    border-radius: 10px;
+}
+
+/* --- Header dan List Styles --- */
+h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    color: #cfcfcf;
+}
+
+li {
+    padding: 5px 0;
+    border-bottom: 1px solid #444;
+}
+
+/* --- Kotak Hari di Kalender (Tampilan Modern dengan Garis Transparan) --- */
+.fc-daygrid-day {
+    background: #ffffffc2 !important; /* Warna putih untuk semua kotak tanggal */
+    color: #000000 !important; /* Warna teks hitam */
+    border: 1px solid rgba(0, 0, 0, 0.05) !important; /* Garis sangat tipis dan transparan */
+    border-radius: 7px; /* Sudut melengkung */
+    margin: 2px; /* Lebih rapat */
+    overflow: hidden;
+    font-size: 16px;
+    font-weight: bold;
+    height: 100px;
+    width: 100px;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Efek bayangan sangat halus */
+}
+
+/* --- Efek Hover pada Kotak Kalender --- */
+.fc-daygrid-day:hover {
+    background: #f5f5f5 !important; /* Warna lebih terang saat hover */
+    border-color: rgba(0, 0, 0, 0.15) !important; /* Border sedikit lebih terlihat saat hover */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    transform: scale(1.02);
+}
+
+/* --- Garis Transparan di Grid Kalender --- */
+.fc-daygrid {
+    border: 1px solid rgba(0, 0, 0, 0.05) !important; /* Garis luar tabel transparan */
+}
+
+/* --- Mengatur Garis di Dalam Grid Kalender --- */
+.fc-daygrid-day-frame {
+    border: 1px solid rgba(0, 0, 0, 0.05) !important; /* Garis pemisah antar kotak lebih halus */
+}
+
+.fc-daygrid-day-top {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03) !important; /* Garis atas kotak */
+}
+
+.fc-daygrid-day-bottom {
+    border-top: 1px solid rgba(0, 0, 0, 0.03) !important; /* Garis bawah kotak */
+}
+
+#audioPlayer {
+    display: none;
+}
