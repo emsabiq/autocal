@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let sentEmails = new Set();
     let lastUpdateTimestamp = null;
 
+    // Fungsi untuk mengambil data dan mengirim pengingat
     function checkAndSendReminders() {
         console.log("🔄 Mengambil data dari Google Sheets...");
         fetch(URL)
@@ -121,6 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error("❌ Error fetching data: ", error));
     }
 
+    // **Kirim Email Reminder**
     function sendEmailReminder(event) {
         console.log(`📧 Mengirim email reminder: ${event.title}`);
         fetch("https://api.smtp2go.com/v3/email/send", {
@@ -145,6 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }).catch(error => console.error("❌ Error sending email:", error));
     }
 
+    // **Kirim Email 1 Hari Sebelumnya**
     function sendEmailReminderOneDayBefore(event) {
         console.log(`📧 Mengirim email reminder H-1: ${event.title}`);
         fetch("https://api.smtp2go.com/v3/email/send", {
@@ -172,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Jalankan pertama kali saat halaman dimuat
     checkAndSendReminders();
 
-    // Cek ulang setiap 5 menit
+    // Perbarui setiap 5 menit
     setInterval(checkAndSendReminders, 300000);
 
     // Pastikan event tetap ada setelah halaman di-refresh
