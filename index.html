@@ -107,7 +107,7 @@
                 let today = now.toISOString().split("T")[0]; // Format: YYYY-MM-DD
                 let lastPlayedDate = localStorage.getItem("lastPlayedDate");
 
-                if (currentHour === 10 && currentMinute === 44 && lastPlayedDate !== today) {
+                if (currentHour === 09 && currentMinute === 59 && lastPlayedDate !== today) {
                     var audio = document.getElementById("audioPlayer");
                     audio.play().then(() => {
                         localStorage.setItem("lastPlayedDate", today);
