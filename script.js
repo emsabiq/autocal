@@ -175,9 +175,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Jalankan pertama kali saat halaman dimuat
     checkAndSendReminders();
 
-    // Perbarui setiap 5 menit
-    setInterval(checkAndSendReminders, 300000);
-
     // Pastikan event tetap ada setelah halaman di-refresh
     const savedEvents = localStorage.getItem("calendarEvents");
     if (savedEvents) {
