@@ -6,7 +6,6 @@
     <title>Auto Switch: Calendar & Looker</title>
 
     <style>
-        /* Styling umum */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -18,15 +17,11 @@
             height: 100vh;
             overflow: hidden;
         }
-
-        /* Container utama untuk iframe */
         .iframe-container {
             width: 100%;
             height: 100vh;
             position: relative;
         }
-
-        /* Iframe */
         iframe {
             width: 100%;
             height: 100vh;
@@ -37,13 +32,10 @@
             opacity: 0;
             transition: opacity 1s ease-in-out;
         }
-
         .visible {
             opacity: 1;
             z-index: 1;
         }
-
-        /* Audio Player */
         .audio-container {
             position: fixed;
             bottom: 20px;
@@ -55,16 +47,12 @@
 <body>
 
     <div class="iframe-container">
-        <!-- Embed a.html -->
         <iframe id="iframe-a" src="a.html" class="visible"></iframe>
-
-        <!-- Embed b.html -->
         <iframe id="iframe-b" src="b.html"></iframe>
     </div>
 
     <div class="audio-container">
-        <!-- Audio Player -->
-        <audio id="audioPlayer">
+        <audio id="audioPlayer" preload="auto">
             <source src="indonesia-raya.mp3" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
@@ -74,63 +62,58 @@
         document.addEventListener("DOMContentLoaded", function () {
             const iframeA = document.getElementById("iframe-a");
             const iframeB = document.getElementById("iframe-b");
+            const audio = document.getElementById("audioPlayer");
             let currentPage = "a";
 
-            // Fungsi untuk toggle halaman dengan animasi lebih smooth
             function togglePage() {
                 requestAnimationFrame(() => {
                     if (currentPage === "a") {
                         iframeA.classList.remove("visible");
-                        setTimeout(() => {
-                            iframeB.classList.add("visible");
-                        }, 1000); // Delay 1 detik agar smooth
+                        setTimeout(() => iframeB.classList.add("visible"), 1000);
                         currentPage = "b";
                     } else {
                         iframeB.classList.remove("visible");
-                        setTimeout(() => {
-                            iframeA.classList.add("visible");
-                        }, 1000);
+                        setTimeout(() => iframeA.classList.add("visible"), 1000);
                         currentPage = "a";
                     }
                 });
             }
-
-            // Atur perubahan tampilan setiap 30 detik
             setInterval(togglePage, 30000);
 
-            // Pemutaran lagu otomatis setiap pukul 10:35 AM
             function checkTimeAndPlayAudio() {
-                var now = new Date();
-                var currentHour = now.getHours();
-                var currentMinute = now.getMinutes();
+                const now = new Date();
+                const today = now.toISOString().split("T")[0];
+                const lastPlayedDate = localStorage.getItem("lastPlayedDate");
 
-                let today = now.toISOString().split("T")[0]; // Format: YYYY-MM-DD
-                let lastPlayedDate = localStorage.getItem("lastPlayedDate");
-
-                if (currentHour === 09 && currentMinute === 59 && lastPlayedDate !== today) {
-                    var audio = document.getElementById("audioPlayer");
-                    audio.play().then(() => {
-                        localStorage.setItem("lastPlayedDate", today);
-                        console.log("✅ Lagu diputar pada pukul 10:35 AM");
-                    }).catch(error => {
-                        console.warn("⚠️ Autoplay dicegah oleh browser. Minta pengguna untuk menekan play.", error);
-                    });
+                if (now.getHours() === 9 && now.getMinutes() === 59 && lastPlayedDate !== today) {
+                    if (audio.paused) {
+                        audio.play().then(() => {
+                            localStorage.setItem("lastPlayedDate", today);
+                            console.log("✅ Lagu diputar pada pukul 10:35 AM");
+                        }).catch(error => console.warn("⚠️ Autoplay dicegah oleh browser", error));
+                    }
                 }
             }
 
-            // Hapus localStorage untuk pengujian ulang (Opsional)
-            // localStorage.removeItem("lastPlayedDate"); 
+            function restoreAudioState() {
+                const isPlaying = localStorage.getItem("audioPlaying");
+                if (isPlaying === "true") {
+                    audio.play().catch(error => console.warn("⚠️ Autoplay dicegah", error));
+                }
+            }
 
-            // Cek waktu setiap 1 menit untuk memutar lagu
-            setInterval(checkTimeAndPlayAudio, 60 * 1000);
+            audio.addEventListener("play", () => localStorage.setItem("audioPlaying", "true"));
+            audio.addEventListener("pause", () => localStorage.setItem("audioPlaying", "false"));
 
-            // ** Paksa autoplay ketika halaman dibuka kembali **
-            document.addEventListener("visibilitychange", function () {
+            setInterval(checkTimeAndPlayAudio, 60000);
+            document.addEventListener("visibilitychange", () => {
                 if (!document.hidden) {
+                    restoreAudioState();
                     checkTimeAndPlayAudio();
                 }
             });
 
+            restoreAudioState();
             console.log("✅ Sistem berjalan, menunggu pukul 10:35 untuk memutar lagu...");
         });
     </script>
