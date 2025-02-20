@@ -31,31 +31,6 @@
         }
     </style>
     <script>
-        // Flag untuk memastikan audio hanya diputar sekali
-        let audioPlayed = false;
-
-        // Fungsi untuk memeriksa waktu dan memutar audio pada jam 10:00 pagi
-        function checkTimeAndPlayAudio() {
-            var currentDate = new Date();
-            var currentHour = currentDate.getHours();
-            var currentMinute = currentDate.getMinutes();
-
-            // Memeriksa apakah sekarang jam 10:00 pagi dan audio belum diputar
-            if (currentHour === 10 && currentMinute === 0 && !audioPlayed) {
-                var audio = document.getElementById("audioPlayer");
-
-                // Pastikan audio belum diputar sebelumnya
-                audio.play().catch(function(error) {
-                    console.error("Error playing audio:", error);
-                });
-
-                // Set flag menjadi true setelah audio diputar
-                audioPlayed = true;
-            }
-        }
-
-        // Memanggil fungsi setiap detik untuk memeriksa waktu
-        setInterval(checkTimeAndPlayAudio, 1000); // 1000 ms = 1 detik
     </script>
 </head>
 <body>
@@ -65,13 +40,6 @@
         
         <iframe src="https://lookerstudio.google.com/embed/reporting/8f77b22f-5232-4bb7-a9e5-9db96a80b25a/page/bmVIE" frameborder="0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
     </div>
-
-    <div class="audio-container">
-        <!-- Audio Player -->
-        <audio id="audioPlayer" controls>
-            <source src="/indonesia-raya.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
     </div>
 
 </body>
