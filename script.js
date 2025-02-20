@@ -122,8 +122,13 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error("❌ Error fetching data: ", error));
     }
 
-    // **Kirim Email Reminder**
-    function sendEmailReminder(event) {
+// Ambil daftar email yang sudah dikirim dari localStorage
+let sentEmails = new Set(JSON.parse(localStorage.getItem("sentEmails")) || []);
+
+function sendEmailReminder(event) {
+    let emailKey = `${event.email}-${event.title}-${event.start}-${event.time}`;
+
+    if (!sentEmails.has(emailKey)) {
         console.log(`📧 Mengirim email reminder: ${event.title}`);
         fetch("https://api.smtp2go.com/v3/email/send", {
             method: "POST",
@@ -144,11 +149,19 @@ document.addEventListener("DOMContentLoaded", function () {
                     <p><i>Email ini dikirim otomatis oleh sistem.</i></p>
                 `
             })
+        }).then(() => {
+            sentEmails.add(emailKey);
+            localStorage.setItem("sentEmails", JSON.stringify([...sentEmails]));
         }).catch(error => console.error("❌ Error sending email:", error));
+    } else {
+        console.log(`⏳ Reminder untuk event "${event.title}" sudah dikirim sebelumnya, tidak dikirim ulang.`);
     }
+}
 
-    // **Kirim Email 1 Hari Sebelumnya**
-    function sendEmailReminderOneDayBefore(event) {
+function sendEmailReminderOneDayBefore(event) {
+    let emailKey = `${event.email}-${event.title}-${event.start}-${event.time}-1Day`;
+
+    if (!sentEmails.has(emailKey)) {
         console.log(`📧 Mengirim email reminder H-1: ${event.title}`);
         fetch("https://api.smtp2go.com/v3/email/send", {
             method: "POST",
@@ -169,8 +182,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     <p><i>Email ini dikirim otomatis oleh sistem.</i></p>
                 `
             })
+        }).then(() => {
+            sentEmails.add(emailKey);
+            localStorage.setItem("sentEmails", JSON.stringify([...sentEmails]));
         }).catch(error => console.error("❌ Error sending email:", error));
+    } else {
+        console.log(`⏳ Reminder H-1 untuk event "${event.title}" sudah dikirim sebelumnya, tidak dikirim ulang.`);
     }
+}
 
     // Jalankan pertama kali saat halaman dimuat
     checkAndSendReminders();
